@@ -1,0 +1,11 @@
+# langchain
+# chromadb
+# beautifulsoup4
+pandas
+aiohttp
+requests
+numpy
+aiosqlite
+SQLAlchemy
+pyyaml
+aiogram

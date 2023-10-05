@@ -1,0 +1,5 @@
+chromadb
+fastapi
+websockets
+# https://fastapi.tiangolo.com/deployment/manually/
+uvicorn[standard]

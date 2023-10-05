@@ -1,0 +1,39 @@
+import os
+from pathlib import Path
+
+__all__ = ['PROJECT_ROOT', 'COLLECTED_DATA_DIR_PATH', 'CHROMA_DB_DIR_PATH', 'CREDENTIALS_DIR_PATH', 'LEXICON_FILEPATH',
+           'VECTOR_DB_SERVICE_PORT', 'VECTOR_DB_SERVICE_HOST', 'VECTOR_DB_SERVICE_URL',
+           'LLM_SERVICE_PORT', 'LLM_SERVICE_HOST', 'LLM_SERVICE_URL']
+
+
+PROJECT_ROOT = Path(__file__).parents[2]
+COLLECTED_DATA_DIR_PATH = PROJECT_ROOT / 'collected_data'
+COLLECTED_DATA_DIR_PATH.mkdir(exist_ok=True)
+
+CHROMA_DB_DIR_PATH = PROJECT_ROOT / 'chroma'
+
+CREDENTIALS_DIR_PATH = PROJECT_ROOT / 'credentials'
+
+LEXICON_FILEPATH = PROJECT_ROOT / 'lexicon.yaml'
+
+# TODO: make constants related to chroma in another file if there'll be too many of them
+VECTOR_DB_SERVICE_PORT = os.getenv('VECTOR_DB_SERVICE_PORT', None)
+if VECTOR_DB_SERVICE_PORT is None:
+    VECTOR_DB_SERVICE_PORT = 8000
+else:
+    VECTOR_DB_SERVICE_PORT = int(VECTOR_DB_SERVICE_PORT)
+
+# VECTOR_DB_SERVICE_HOST = os.getenv('VECTOR_DB_SERVICE_PORT', "0.0.0.0")
+VECTOR_DB_SERVICE_HOST = os.getenv('VECTOR_DB_SERVICE_HOST', "localhost")
+# ignore pycharm warning about http over https (!)
+VECTOR_DB_SERVICE_URL = f"http://{VECTOR_DB_SERVICE_HOST}:{VECTOR_DB_SERVICE_PORT}/"
+
+LLM_SERVICE_PORT = os.getenv('LLM_SERVICE_PORT', None)
+if LLM_SERVICE_PORT is None:
+    LLM_SERVICE_PORT = 8081
+else:
+    LLM_SERVICE_PORT = int(LLM_SERVICE_PORT)
+
+LLM_SERVICE_HOST = os.getenv('LLM_SERVICE_HOST', "localhost")
+
+LLM_SERVICE_URL = f"http://{LLM_SERVICE_HOST}:{LLM_SERVICE_PORT}"

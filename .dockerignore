@@ -1,0 +1,14 @@
+.idea/*
+.vs/*
+
+**/*__pycache__
+
+assets/*
+tools/*
+
+credentials/bot.yaml
+# ignore bot-related db:
+*.sqlite3
+
+vectordb_service/venv/*
+vectordb_service/.idea/*

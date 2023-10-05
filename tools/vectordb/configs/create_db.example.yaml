@@ -1,0 +1,2 @@
+df_path: path/to/scraped/pubmed/df.parquet
+collection_name: your topic name

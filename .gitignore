@@ -1,0 +1,30 @@
+.idea/*
+.vs/*
+
+**/*__pycache__
+
+chroma/*
+
+# ignore all yaml files
+credentials/*.yaml
+# but keep .examples
+!credentials/*.example.yaml
+#credentials/!*.example.yaml
+
+# ignore bot-related db:
+*.sqlite3
+
+vectordb_service/venv
+vectordb_service/.idea
+# ignore models themselves:
+llm_service/models/*.bin
+llm_service/models/*.pt
+
+# ignore any end-user data (local paths, keys etc)
+llm_service/*.yaml
+# do NOT ignore examples
+!llm_service/*.example.yaml
+
+# ignore any actual configs in tools:
+tools/**/*.yaml
+!tools/**/*.example.yaml

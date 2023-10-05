@@ -1,0 +1,15 @@
+pyyaml
+pydantic
+langchain
+chromadb
+pyarrow
+pandas
+tqdm
+# rest is also required since create_db.py uses some utils from tgmedbot package
+aiohttp
+requests
+numpy
+aiosqlite
+SQLAlchemy
+pyyaml
+aiogram

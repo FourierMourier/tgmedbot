@@ -1,0 +1,78 @@
+version: '3'
+
+networks:
+  bot_services_network:
+
+services:
+  bot:
+    restart: on-failure
+    environment:
+      VECTOR_DB_SERVICE_HOST: "vectordb_service"
+      LLM_SERVICE_HOST: "llm_service"
+      VECTOR_DB_SERVICE_PORT: "8079"
+      LLM_SERVICE_PORT: "8081"
+    build:
+      context: ./bot
+    networks:
+      - bot_services_network
+    volumes:
+      - ./credentials:/app/credentials
+      - ./bot:/app/bot
+      - ./tgmedbot:/app/tgmedbot
+      - ./lexicon.yaml:/app/lexicon.yaml
+    entrypoint: [ "python", "bot/bot.py" ]
+    deploy:
+      resources:
+        limits:
+          cpus: '4.00'
+          memory: 768MB
+    depends_on:
+      - vectordb_service
+      - llm_service
+
+  vectordb_service:
+    build:
+      context: ./vectordb_service
+    environment:
+      VECTOR_DB_SERVICE_HOST: "vectordb_service"
+      LLM_SERVICE_HOST: "llm_service"
+      VECTOR_DB_SERVICE_PORT: "8079"
+      LLM_SERVICE_PORT: "8081"
+    ports:
+      - "8079:8079"
+    volumes:
+      - ./vectordb_service:/app/
+      - ./chroma:/chroma
+    networks:
+      - bot_services_network
+#    entrypoint: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8079"]
+    entrypoint: [ "python", "main.py"]
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          cpus: '3.00'
+          memory: 2000MB
+
+  llm_service:
+    build:
+      context: ./llm_service
+    ports:
+      - "8081:8081"
+    environment:
+      VECTOR_DB_SERVICE_HOST: "vectordb_service"
+      LLM_SERVICE_HOST: "llm_service"
+      VECTOR_DB_SERVICE_PORT: "8079"
+      LLM_SERVICE_PORT: "8081"
+    volumes:
+      - ./llm_service:/app/
+    networks:
+      - bot_services_network
+#    entrypoint: [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8081" ]
+    entrypoint: [ "python", "main.py"]
+    deploy:
+      resources:
+        limits:
+          cpus: '4.00'
+          memory: 5000MB
+    restart: on-failure

@@ -1,0 +1,6 @@
+pyyaml
+fastapi
+pydantic
+gpt4all
+# https://fastapi.tiangolo.com/deployment/manually/
+uvicorn[standard]

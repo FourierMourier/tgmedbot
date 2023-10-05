@@ -1,0 +1,3 @@
+model_path: relative/path/to/your/model
+# include user_input as well as context in the template:
+template: 'your model input template, where user_input={user_input} and context={context} are included'
